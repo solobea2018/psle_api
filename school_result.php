@@ -15,6 +15,12 @@ if (empty($year) || empty($school)) {
 
 // Construct NECTA URL
 $url = "https://onlinesys.necta.go.tz/results/{$year}/psle/results/shl_" . strtolower($school) . ".htm";
+if ($year==2025){
+    $url= "https://matokeo.necta.go.tz/results/{$year}/psle/results/shl_".strtolower($school).".htm";
+}
+if ($year<=2022 && $year>=2016){
+    $url="https://maktaba.tetea.org/exam-results/PSLE".$year."/shl_".strtolower($school).".htm";
+}
 
 // Fetch HTML from NECTA
 $html = @file_get_contents($url);

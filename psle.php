@@ -18,6 +18,12 @@ if(!$year || !$school || !$index) {
 
 // Construct URL (assuming pattern as in your example)
 $url = "https://onlinesys.necta.go.tz/results/{$year}/psle/results/shl_".strtolower($school).".htm";
+if ($year==2025){
+    $url= "https://matokeo.necta.go.tz/results/{$year}/psle/results/shl_".strtolower($school).".htm";
+}
+if ($year<=2022 && $year>=2016){
+    $url="https://maktaba.tetea.org/exam-results/PSLE".$year."/shl_".strtolower($school).".htm";
+}
 
 // Fetch the page content
 $html = @file_get_contents($url);
