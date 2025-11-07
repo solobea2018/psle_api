@@ -21,7 +21,7 @@ $url = "https://onlinesys.necta.go.tz/results/{$year}/psle/results/shl_".strtolo
 if ($year==2025){
     $url= "https://matokeo.necta.go.tz/results/{$year}/psle/results/shl_".strtolower($school).".htm";
 }
-if ($year<=2022 && $year>=2016){
+if ($year<=2021 && $year>=2016){
     $url="https://maktaba.tetea.org/exam-results/PSLE".$year."/shl_".strtolower($school).".htm";
 }
 
@@ -52,24 +52,46 @@ $resultData = null;
 
 foreach($rows as $row) {
     $tds = $xpath->query("td", $row);
+
     if($tds->length >= 4) {
         $candNo = trim($tds->item(0)->textContent);
-        if(strcasecmp($candNo, "{$school}-{$index}") === 0) {
-            $premNo  = trim($tds->item(1)->textContent);
-            $sex     = trim($tds->item(2)->textContent);
-            $subjects= trim($tds->item(3)->textContent);
+        //echo $candNo;
+        if ($year<2022){
+            if(strcasecmp($candNo, "{$school}-{$index}") === 0) {
+                $premNo  = trim($tds->item(2)->textContent);
+                $sex     = trim($tds->item(1)->textContent);
+                $subjects= trim($tds->item(3)->textContent);
 
-            $resultData = [
-                "year"        => $year,
-                "school"      => $school,
-                "index"       => $index,
-                "candidate_no"=> $candNo,
-                "prem_no"     => $premNo,
-                "sex"         => $sex,
-                "subjects"    => $subjects
-            ];
-            $found = true;
-            break;
+                $resultData = [
+                    "year"        => $year,
+                    "school"      => $school,
+                    "index"       => $index,
+                    "candidate_no"=> $candNo,
+                    "prem_no"     => $premNo,
+                    "sex"         => $sex,
+                    "subjects"    => $subjects
+                ];
+                $found = true;
+                break;
+            }else{
+                if(strcasecmp($candNo, "{$school}-{$index}") === 0) {
+                    $premNo  = trim($tds->item(1)->textContent);
+                    $sex     = trim($tds->item(2)->textContent);
+                    $subjects= trim($tds->item(3)->textContent);
+
+                    $resultData = [
+                        "year"        => $year,
+                        "school"      => $school,
+                        "index"       => $index,
+                        "candidate_no"=> $candNo,
+                        "prem_no"     => $premNo,
+                        "sex"         => $sex,
+                        "subjects"    => $subjects
+                    ];
+                    $found = true;
+                    break;
+                }
+            }
         }
     }
 }
