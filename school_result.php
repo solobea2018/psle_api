@@ -5,8 +5,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Get year and school number from query
-$year = isset($_GET['year']) ? $_GET['year'] : '';
-$school = isset($_GET['school']) ? $_GET['school'] : '';
+$year = $_GET['year'] ?? '';
+$school = $_GET['school'] ?? '';
 
 if (empty($year) || empty($school)) {
     echo "<p style='color:red;'>❌ Missing parameters. Use ?year=2024&school=PS0401058</p>";
